@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "preversion": "lerna run prepublishOnly",
+    "preversion": "lerna run lint",
     "publish:patch": "lerna version patch --force-publish --no-changelog && lerna publish from-package",
     "publish:minor": "lerna version minor --force-publish --no-changelog && lerna publish from-package",
     "publish:major": "lerna version major --force-publish --no-changelog && lerna publish from-package"

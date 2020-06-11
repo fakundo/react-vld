@@ -41,7 +41,8 @@ const createValidator = ({ forceUpdate, rule, mapError }) => {
   }
 
   const validate = (options) => {
-    const validationError = validator.mapError(getChildError(options) || getSelfError())
+    const initialError = getChildError(options) || getSelfError()
+    const validationError = initialError && validator.mapError(initialError)
     const nextState = validationError
       ? {
         isValid: false,

@@ -2,15 +2,17 @@
 
 [![npm](https://img.shields.io/npm/v/preact-vld.svg)](https://www.npmjs.com/package/preact-vld)
 
-Simple and flexible validation for Preact components. The main thing here is the `Validator` component. 
+Simple and flexible validation for Preact components. 
 
-- Validator accepts `children` prop as a function and passes the validation state as a parameter to it.
+- The main thing here is a `Validator` component. 
 
-- Validator has a functional `rule` prop. If within the rule the `ValidationError` exception was thrown then the validation will fail and the Validator will change its status.
+- The Validator accepts `children` prop as a function and passes the validation state as a parameter to it.
 
-- By default Validator is rerendered every time when validation status changes.
+- Validator has a functional `rule` prop. If a `ValidationError` was thrown within the `rule`, then validation fails, and the Validator changes status.
 
-- You can nest Validator components. The parent Validator fails when any of the child Validators fail.
+- By default, Validator is rerendered every time the validation status changes.
+
+- You can nest Validator components. The parent Validator fails when any of the child Validators fails.
 
 ## Installation
 
@@ -23,8 +25,6 @@ npm install preact-vld
 Example of Input component
 
 ```javascript
-import { h, Fragment } from 'preact'
-import { useState, useCallback } from 'preact/hooks'
 import { Validator, ValidationError } from 'preact-vld'
 
 export default () => {
@@ -64,8 +64,6 @@ export default () => {
 Example of Form component (nesting)
 
 ```javascript
-import { h } from 'preact'
-import { useCallback } from 'preact/hooks'
 import { Validator, ValidationError } from 'preact-vld'
 
 export default () => (
@@ -73,6 +71,7 @@ export default () => (
     { ({ validate }) => {
       const handleSubmit = useCallback((ev) => {
         ev.preventDefault()
+
         if (validate().isValid) {
           alert('Submitted!')
         }
@@ -93,15 +92,15 @@ export default () => (
 
 #### Validator props
 
-- `rule()` - used to check the validation status
+- `rule()` - used to get new validation state
 
-- `mapError(validationError)` - transforms a validation error
+- `mapError(validationError)` - used to transform validation error, may be used for adding some payload
 
-#### Validation state (passes as parameter to Validator `children` prop function)
+#### Validation object (passes as parameter to Validator `children` prop function)
 
-- `validate({ updateComponent = true } = {})` - invokes validation (checking `rule` and also calling `validate` for every child Validators)
+- `validate({ updateComponent = true } = {})` - invokes validation (calling `rule` and also calling `validate` for every child Validators)
 
-- `resetValidation({ updateComponent = true } = {})` - resets validation (also calling `resetValidation` for every child Validators)
+- `resetValidation({ updateComponent = true } = {})` - resets validation state (also calling `resetValidation` for every child Validators)
 
 - `isValid` - `true` if validation is valid
 
