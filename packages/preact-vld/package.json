@@ -1,6 +1,6 @@
 {
   "name": "preact-vld",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Simple and flexible validation for Preact components",
   "main": "lib/index.js",
   "files": [
