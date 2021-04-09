@@ -4,27 +4,27 @@
 
 Simple and flexible validation for Preact components. 
 
-- The main thing here is a `Validator` component. 
+- The main thing here is `Validator` component. Use it as a wrapper for your input components, forms, or whatever component you want to validate.
 
-- The Validator accepts `children` prop as a function and passes the validation state as a parameter to it.
+- `Validator` accepts `children` prop as a function and passes the validation state as a parameter into it.
 
-- Validator has a functional `rule` prop. If a `ValidationError` was thrown within the `rule`, then validation fails, and the Validator changes status.
+- For updating validation state `Validator` uses a functional prop - `rule`. If a `ValidationError` was thrown within the `rule`, then validation fails, and the `Validator` updates validation state.
 
-- By default, Validator is rerendered every time the validation status changes.
+- By default, `Validator` is rerendered every time the validation state is updated.
 
-- You can nest Validator components. The parent Validator fails when any of the child Validators fails.
+- You can nest `Validator` components. The parent `Validator` fails when any of the child `Validator` fails.
 
-## Installation
+### Installation
 
 ```
-npm install preact-vld
+npm i preact-vld
 ```
 
-## Usage
+### Usage
 
 Example of Input component
 
-```javascript
+```js
 import { Validator, ValidationError } from 'preact-vld'
 
 export default () => {
@@ -44,10 +44,10 @@ export default () => {
     <Validator rule={checkValue}>
       { ({ validate, isInvalid, validationError }) => (
         <Fragment>
-          <input 
+          <input
             value={value}
-            onChange={handleChange}
             onBlur={validate}
+            onChange={handleChange}
           />
           { isInvalid && (
             <div>
@@ -63,7 +63,7 @@ export default () => {
 
 Example of Form component (nesting)
 
-```javascript
+```js
 import { Validator, ValidationError } from 'preact-vld'
 
 export default () => (
@@ -88,30 +88,32 @@ export default () => (
 )
 ```
 
-## API
+### API
 
-#### Validator props
+#### `Validator` props
 
-- `rule()` - used to get new validation state
+- `rule()` used to calculate new validation state
 
-- `mapError(validationError)` - used to transform validation error, may be used for adding some payload
+- `mapError(validationError)` transforms validation error, may be useful for adding some payload to the error
 
-#### Validation object (passes as parameter to Validator `children` prop function)
+- `children(validationState)`
 
-- `validate({ updateComponent = true } = {})` - invokes validation (calling `rule` and also calling `validate` for every child Validators)
+#### `validationState` has the following structure
 
-- `resetValidation({ updateComponent = true } = {})` - resets validation state (also calling `resetValidation` for every child Validators)
+- `validate({ updateComponent = true } = {})` invokes validation routine (calling `rule` and also calling `validate` for every child `Validator`)
 
-- `isValid` - `true` if validation is valid
+- `resetValidation({ updateComponent = true } = {})` resets validation state (also calling `resetValidation` for every child `Validator`)
 
-- `isInvalid` - `true` if validation is invalid
+- `isValid` = `true|false|undefined`
 
-- `validationError` - validation error, `undefined` when validation is not invalid
+- `isInvalid` = `true|false|undefined`
 
-#### ValidationError
+- `validationError` = `ValidationError|undefined`
+
+#### `ValidationError`
 
 - `constructor(message, payload)`
 
-## License
+### License
 
 MIT
